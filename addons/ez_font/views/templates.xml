@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- CSS is injected dynamically via controller at /ez_font/get_css -->
+        <!-- This file can remain empty as the magic happens in the controller -->
+    </data>
+</odoo>

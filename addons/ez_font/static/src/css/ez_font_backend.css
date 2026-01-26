@@ -1,0 +1,10 @@
+/* Ez Font Backend CSS */
+/* This file is included in web.assets_backend */
+/* The dynamic CSS is loaded from /ez_font/get_css endpoint */
+
+:root {
+    --ez-font-custom: inherit;
+}
+
+/* Placeholder for dynamic font styles */
+/* Actual font styles are injected dynamically via /ez_font/get_css */
