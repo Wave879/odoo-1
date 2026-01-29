@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_line_oa_config_manager,line.oa.config.manager,model_line_oa_config,group_line_oa_manager,1,1,1,1
+access_line_message_template_manager,line.message.template.manager,model_line_message_template,group_line_oa_manager,1,1,1,1
+access_line_message_template_admin,line.message.template.admin,model_line_message_template,group_line_oa_admin,1,0,0,0
+access_line_message_log_manager,line.message.log.manager,model_line_message_log,group_line_oa_manager,1,1,1,1
+access_line_message_log_admin,line.message.log.admin,model_line_message_log,group_line_oa_admin,1,0,0,0
+access_line_message_send_wizard_manager,line.message.send.wizard.manager,model_line_message_send_wizard,group_line_oa_manager,1,1,1,1
+access_line_message_send_wizard_admin,line.message.send.wizard.admin,model_line_message_send_wizard,group_line_oa_admin,1,1,0,0
+access_project_service_manager,project.service.manager,model_project_service,group_line_oa_manager,1,1,1,1
+access_project_service_admin,project.service.admin,model_project_service,group_line_oa_admin,1,0,0,0
+access_project_service_sub_manager,project.service.sub.manager,model_project_service_sub,group_line_oa_manager,1,1,1,1
+access_project_service_sub_admin,project.service.sub.admin,model_project_service_sub,group_line_oa_admin,1,0,0,0
+

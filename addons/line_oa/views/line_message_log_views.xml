@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Message Log Form View -->
+    <record id="view_line_message_log_form" model="ir.ui.view">
+        <field name="name">line.message.log.form</field>
+        <field name="model">line.message.log</field>
+        <field name="arch" type="xml">
+            <form string="บันทึกการส่งข้อความ" create="false" edit="false">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sending,sent,failed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name"/></h1>
+                    </div>
+                    <group>
+                        <group string="ข้อมูลการส่ง">
+                            <field name="template_id"/>
+                            <field name="message_type"/>
+                            <field name="send_method"/>
+                            <field name="sent_date"/>
+                        </group>
+                        <group string="ผู้รับ">
+                            <field name="recipient_type"/>
+                            <field name="user_id_line" attrs="{'invisible': [('send_method', '!=', 'push')]}"/>
+                            <field name="user_ids_line" attrs="{'invisible': [('send_method', '!=', 'multicast')]}"/>
+                            <field name="reply_token" attrs="{'invisible': [('send_method', '!=', 'reply')]}"/>
+                        </group>
+                    </group>
+                    <group string="เนื้อหาข้อความ" attrs="{'invisible': [('message_content', '=', False)]}">
+                        <field name="message_content" nolabel="1"/>
+                    </group>
+                    <group string="ข้อมูลตอบกลับ" attrs="{'invisible': [('response_data', '=', False)]}">
+                        <field name="response_data" nolabel="1"/>
+                    </group>
+                    <group string="ข้อความ Error" attrs="{'invisible': [('error_message', '=', False)]}">
+                        <field name="error_message" nolabel="1"/>
+                    </group>
+                    <group>
+                        <field name="config_id"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Message Log Tree View -->
+    <record id="view_line_message_log_tree" model="ir.ui.view">
+        <field name="name">line.message.log.tree</field>
+        <field name="model">line.message.log</field>
+        <field name="arch" type="xml">
+            <tree string="บันทึกการส่งข้อความ" create="false" delete="false">
+                <field name="create_date" string="วันที่"/>
+                <field name="template_id"/>
+                <field name="message_type"/>
+                <field name="send_method"/>
+                <field name="recipient_type"/>
+                <field name="state" widget="badge" decoration-success="state == 'sent'" decoration-danger="state == 'failed'" decoration-warning="state == 'sending'"/>
+                <field name="sent_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Message Log Search View -->
+    <record id="view_line_message_log_search" model="ir.ui.view">
+        <field name="name">line.message.log.search</field>
+        <field name="model">line.message.log</field>
+        <field name="arch" type="xml">
+            <search string="ค้นหาบันทึก">
+                <field name="template_id"/>
+                <field name="message_type"/>
+                <field name="send_method"/>
+                <filter string="ส่งสำเร็จ" name="sent" domain="[('state', '=', 'sent')]"/>
+                <filter string="ส่งล้มเหลว" name="failed" domain="[('state', '=', 'failed')]"/>
+                <separator/>
+                <filter string="วันนี้" name="today" domain="[('create_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter string="7 วันที่แล้ว" name="last_7_days" domain="[('create_date', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="จัดกลุ่มตาม">
+                    <filter string="ประเภทข้อความ" name="group_message_type" context="{'group_by': 'message_type'}"/>
+                    <filter string="วิธีการส่ง" name="group_send_method" context="{'group_by': 'send_method'}"/>
+                    <filter string="สถานะ" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="วันที่" name="group_date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Message Log Graph View -->
+    <record id="view_line_message_log_graph" model="ir.ui.view">
+        <field name="name">line.message.log.graph</field>
+        <field name="model">line.message.log</field>
+        <field name="arch" type="xml">
+            <graph string="สถิติการส่งข้อความ" type="bar">
+                <field name="create_date" interval="day"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Message Log Pivot View -->
+    <record id="view_line_message_log_pivot" model="ir.ui.view">
+        <field name="name">line.message.log.pivot</field>
+        <field name="model">line.message.log</field>
+        <field name="arch" type="xml">
+            <pivot string="วิเคราะห์การส่งข้อความ">
+                <field name="create_date" interval="day" type="row"/>
+                <field name="message_type" type="col"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Message Log Action -->
+    <record id="action_line_message_log" model="ir.actions.act_window">
+        <field name="name">บันทึกการส่งข้อความ</field>
+        <field name="res_model">line.message.log</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="context">{'search_default_last_7_days': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                ยังไม่มีบันทึกการส่งข้อความ
+            </p>
+            <p>
+                บันทึกการส่งข้อความจะปรากฏที่นี่เมื่อมีการส่งข้อความผ่าน LINE OA
+            </p>
+        </field>
+    </record>
+</odoo>

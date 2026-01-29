@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ตัวอย่างเทมเพลทข้อความ -->
+        
+        <!-- Text Message Example -->
+        <record id="template_text_welcome" model="line.message.template">
+            <field name="name">ข้อความต้อนรับ</field>
+            <field name="message_type">text</field>
+            <field name="description">ข้อความต้อนรับสำหรับลูกค้าใหม่</field>
+            <field name="text_content">สวัสดีครับ! ยินดีต้อนรับสู่บริการของเรา 🎉</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Sticker Message Example -->
+        <record id="template_sticker_thanks" model="line.message.template">
+            <field name="name">สติกเกอร์ขอบคุณ</field>
+            <field name="message_type">sticker</field>
+            <field name="description">ส่งสติกเกอร์ขอบคุณ</field>
+            <field name="sticker_package_id">446</field>
+            <field name="sticker_id">1988</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Template Buttons Example -->
+        <record id="template_buttons_menu" model="line.message.template">
+            <field name="name">เมนูหลัก</field>
+            <field name="message_type">template_buttons</field>
+            <field name="description">เมนูหลักพร้อมปุ่มเลือก</field>
+            <field name="template_json">{
+  "type": "template",
+  "altText": "เมนูหลัก",
+  "template": {
+    "type": "buttons",
+    "text": "กรุณาเลือกเมนู",
+    "actions": [
+      {
+        "type": "message",
+        "label": "ดูสินค้า",
+        "text": "ดูสินค้า"
+      },
+      {
+        "type": "message",
+        "label": "ติดต่อเรา",
+        "text": "ติดต่อเรา"
+      }
+    ]
+  }
+}</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Flex Message Example -->
+        <record id="template_flex_product" model="line.message.template">
+            <field name="name">แสดงสินค้า (Flex)</field>
+            <field name="message_type">flex</field>
+            <field name="description">แสดงข้อมูลสินค้าแบบ Flex Message</field>
+            <field name="template_json">{
+  "type": "flex",
+  "altText": "ข้อมูลสินค้า",
+  "contents": {
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "สินค้าแนะนำ",
+          "weight": "bold",
+          "size": "xl"
+        },
+        {
+          "type": "text",
+          "text": "ราคาพิเศษ 999 บาท",
+          "size": "sm",
+          "color": "#999999"
+        }
+      ]
+    }
+  }
+}</field>
+            <field name="sequence">40</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_line_oa_root" 
+              name="LINE OA" 
+              sequence="100" 
+              web_icon="line_oa_notify,static/description/icon.png"/>
+
+    <!-- Basic Information Menu -->
+    <menuitem id="menu_line_oa_basic_info" 
+              name="ข้อมูลพื้นฐาน" 
+              parent="menu_line_oa_root" 
+              sequence="40"/>
+
+    <!-- Project/Service Submenu -->
+    <menuitem id="menu_line_oa_project_service" 
+              name="Project/Service" 
+              parent="menu_line_oa_basic_info" 
+              action="line_oa.action_project_service"
+              sequence="10"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_line_oa_config" 
+              name="การตั้งค่า" 
+              parent="menu_line_oa_root" 
+              action="action_line_oa_config" 
+              sequence="10"/>
+
+    <!-- Templates Menu -->
+    <menuitem id="menu_line_message_template" 
+              name="เทมเพลทข้อความ" 
+              parent="menu_line_oa_root" 
+              action="action_line_message_template" 
+              sequence="20"/>
+
+    <!-- Message Log Menu -->
+    <menuitem id="menu_line_message_log" 
+              name="บันทึกการส่ง" 
+              parent="menu_line_oa_root" 
+              action="action_line_message_log" 
+              sequence="30"/>
+</odoo>

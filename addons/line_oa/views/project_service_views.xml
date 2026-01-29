@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Project/Service Form View -->
+    <record id="view_project_service_form" model="ir.ui.view">
+        <field name="name">project.service.form</field>
+        <field name="model">project.service</field>
+        <field name="arch" type="xml">
+            <form string="Project/Service">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <div style="width: 140px; text-align: center; float: right; margin-right: 15px;">
+                            <field name="image" widget="image" class="oe_avatar" options="{'size': [140, 140]}"/>
+                        </div>
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="is_active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="project_name" placeholder="Project Name"/></h1>
+                    </div>
+
+                    <!-- วิธีการส่ง และ LINE User ID (ซ้าย-ขวา) -->
+                    <div style="display: flex; gap: 15px;">
+                        <!-- ซ้าย: วิธีการส่ง + LINE User ID -->
+                        <div style="flex: 1; border: 2px solid #ffcccc; background-color: #fff5f5; padding: 15px; border-radius: 4px;">
+                            <strong>วิธีการส่ง ?</strong>
+                            <div style="margin-top: 8px; margin-bottom: 12px;">
+                                <field name="message_type" widget="radio"/>
+                            </div>
+                            <strong style="display: block;">LINE User ID *</strong>
+                            <field name="line_user_id" placeholder="U1234567890abcdef1234567890abcdef" nolabel="1" style="width: 100%;"/>
+                        </div>
+
+                        <!-- ขวา: คำแนะนำ -->
+                        <div style="flex: 1; border: 2px solid #059e45; background-color: #f5fff5; padding: 15px; border-radius: 4px;">
+                            <p style="margin-top: 0;"><strong>วิธีการ:</strong></p>
+                            <ul style="margin-bottom: 0; font-size: 12px;">
+                                <li>เพิ่มบอทเป็นเพื่อนในไลน์</li>
+                                <li>ส่งข้อความหาบอท</li>
+                                <li>เช็ค user id ใน webhook</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Project Info Section -->
+                    <div style="margin-top: 20px;"/>
+                    <group>
+                        <field name="project_code" placeholder="Project Code" colspan="2"/>
+                        <field name="project_sync_id" colspan="2"/>
+                        <field name="project_name" placeholder="Project Name" colspan="2"/>
+                        <field name="is_active" widget="boolean_toggle" colspan="2"/>
+                    </group>
+
+                    <!-- Project Description Section -->
+                    <group string="Project Description">
+                        <field name="project_description" nolabel="1" colspan="4"/>
+                    </group>
+
+                    <!-- Sub Services Tabs -->
+                    <notebook>
+                        <page string="Project Sub">
+                            <field name="project_sub_ids">
+                                <tree editable="bottom">
+                                    <field name="project_sub_code"/>
+                                    <field name="sub_service_name"/>
+                                    <field name="project_pm"/>
+                                    <field name="project_description"/>
+                                    <field name="is_active" widget="boolean_toggle"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Project/Service Tree View -->
+    <record id="view_project_service_tree" model="ir.ui.view">
+        <field name="name">project.service.tree</field>
+        <field name="model">project.service</field>
+        <field name="arch" type="xml">
+            <tree string="Project/Service">
+                <field name="project_code"/>
+                <field name="project_name"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Project/Service Action -->
+    <record id="action_project_service" model="ir.actions.act_window">
+        <field name="name">Project/Service</field>
+        <field name="res_model">project.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Project Sub Service Form View -->
+    <record id="view_project_service_sub_form" model="ir.ui.view">
+        <field name="name">project.service.sub.form</field>
+        <field name="model">project.service.sub</field>
+        <field name="arch" type="xml">
+            <form string="Sub Service">
+                <sheet>
+                    <group>
+                        <field name="project_id"/>
+                        <field name="project_sub_code"/>
+                        <field name="sub_service_name"/>
+                        <field name="is_active" widget="boolean_toggle"/>
+                    </group>
+                    <group string="Description">
+                        <field name="project_description" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Project Sub Service Tree View -->
+    <record id="view_project_service_sub_tree" model="ir.ui.view">
+        <field name="name">project.service.sub.tree</field>
+        <field name="model">project.service.sub</field>
+        <field name="arch" type="xml">
+            <tree string="Sub Services">
+                <field name="project_sub_code"/>
+                <field name="sub_service_name"/>
+                <field name="project_pm"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

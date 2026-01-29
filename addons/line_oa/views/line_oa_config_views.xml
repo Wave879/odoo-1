@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LINE OA Config Form View -->
+    <record id="view_line_oa_config_form" model="ir.ui.view">
+        <field name="name">line.oa.config.form</field>
+        <field name="model">line.oa.config</field>
+        <field name="arch" type="xml">
+            <form string="การตั้งค่า LINE OA">
+                <header>
+                    <button name="action_test_connection" string="ทดสอบการเชื่อมต่อ" type="object" class="oe_highlight"/>
+                    <field name="connection_status" widget="statusbar" statusbar_visible="not_tested,success,failed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="is_active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="ชื่อการตั้งค่า เช่น LINE OA หลัก"/></h1>
+                    </div>
+                    <group>
+                        <group string="ข้อมูล LINE Official Account">
+                            <field name="channel_access_token" password="True"/>
+                            <field name="channel_secret" password="True"/>
+                            <field name="webhook_url" widget="url" readonly="1"/>
+                        </group>
+                        <group string="สถานะ">
+                            <field name="last_test_date" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="ข้อความ Error" attrs="{'invisible': [('error_message', '=', False)]}">
+                        <field name="error_message" nolabel="1" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="คำแนะนำการตั้งค่า">
+                            <div class="alert alert-info" role="alert">
+                                <h4>วิธีการตั้งค่า LINE Official Account:</h4>
+                                <ol>
+                                    <li>เข้าไปที่ <a href="https://developers.line.biz/console/" target="_blank">LINE Developers Console</a></li>
+                                    <li>สร้าง Provider และ Channel (Messaging API)</li>
+                                    <li>คัดลอก <b>Channel Access Token</b> และ <b>Channel Secret</b> มาใส่ในฟอร์มนี้</li>
+                                    <li>ตั้งค่า Webhook URL ใน LINE Console ให้ตรงกับ URL ด้านบน</li>
+                                    <li>กดปุ่ม "ทดสอบการเชื่อมต่อ" เพื่อตรวจสอบ</li>
+                                </ol>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- LINE OA Config Tree View -->
+    <record id="view_line_oa_config_tree" model="ir.ui.view">
+        <field name="name">line.oa.config.tree</field>
+        <field name="model">line.oa.config</field>
+        <field name="arch" type="xml">
+            <tree string="การตั้งค่า LINE OA">
+                <field name="name"/>
+                <field name="connection_status" widget="badge" decoration-success="connection_status == 'success'" decoration-danger="connection_status == 'failed'"/>
+                <field name="is_active" widget="boolean_toggle"/>
+                <field name="last_test_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- LINE OA Config Action -->
+    <record id="action_line_oa_config" model="ir.actions.act_window">
+        <field name="name">การตั้งค่า LINE OA</field>
+        <field name="res_model">line.oa.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                สร้างการตั้งค่า LINE Official Account
+            </p>
+            <p>
+                ตั้งค่าการเชื่อมต่อกับ LINE Official Account เพื่อส่งข้อความแจ้งเตือน
+            </p>
+        </field>
+    </record>
+</odoo>
